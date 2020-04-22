@@ -1,8 +1,7 @@
 import click 
 import os
 import shutil
-#action= ['create','new',update','move','destroy','recycle','append']
-#object = ['file','directory','document','folder']
+
 def CreateController(prompt):
   objectItem = ''
   actionItem = ''
@@ -40,8 +39,8 @@ def PerformAction(controller):
 
 def CreateFile():
   print("create a new file")
-  #prompt = input("what is the name of your file(include extension): ")
-  #file = (prompt,'w+')
+  prompt = input("what is the name of your file(include extension): ")
+  file = open(prompt,'w+')
   
   #DeleteFile()
   #This will remove a specific file from your current directory.
@@ -63,6 +62,9 @@ def CreateDirectory():
   CurrentDirectory = os.getcwd()
   os.makedirs(os.path.join(CurrentDirectory,prompt))
 
+#DeleteDirectory()
+#Allows for you delete a given directory
+#It will prompt with a list of directories for you to choose from.  Then it will ask if you truly want to delete that directory.
 def DeleteDirectory():
   CurrentDirectory = os.getcwd()
   print(os.listdir(CurrentDirectory))
@@ -93,8 +95,6 @@ def DeleteDirectory():
       print("dont delete me")
     else:
       print("my appologies, I did not understand your response")
-
-  print("delete directory")
 
 def MoveDirectory():
   print("move directory")
