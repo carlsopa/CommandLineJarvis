@@ -28,7 +28,7 @@ def PerformAction(controller):
         DeleteFile()
       else:
         DeleteDirectory()
-    elif int(controller[0]) == 5:
+    elif int(controller[0]) == 6:
       if int(controller[1]) in range(0,2):
         MoveFile()
       else:
@@ -36,7 +36,8 @@ def PerformAction(controller):
     else:
       print("bad request")
     
-
+#CreateFile()
+#This will allow you to create a new file in the current directory
 def CreateFile():
   print("create a new file")
   prompt = input("what is the name of your file(include extension): ")
@@ -66,6 +67,7 @@ def CreateDirectory():
 #Allows for you delete a given directory
 #It will prompt with a list of directories for you to choose from.  Then it will ask if you truly want to delete that directory.
 def DeleteDirectory():
+  print("Delete Directory")
   CurrentDirectory = os.getcwd()
   print(os.listdir(CurrentDirectory))
   DirectoryPrompt = input("what folder would you like to delete: ")
@@ -80,7 +82,7 @@ def DeleteDirectory():
         print(error)
         print("Directory '%s' can not be removed" %DeletionItem)
     elif prompt.capitalize().find("N") == 0:
-      print("dont delete me")
+      print("don't delete me")
     else:
       print("my appologies, I did not understand your response")
   else:
@@ -92,13 +94,22 @@ def DeleteDirectory():
         print(error)
         print("Directory '%s' can not be removed" %DeletionItem)
     elif prompt.capitalize().find("N") == 0:
-      print("dont delete me")
+      print("don't delete me")
     else:
       print("my appologies, I did not understand your response")
 
+def MoveFile():
+  print("move file")
+  CurrentDirectory = os.getcwd()
+  print(os.listdir(CurrentDirectory))
+  SourcePrompt = input("what file would you like to move: ")
+  MoveItem = os.path.join(CurrentDirectory,str(SourcePrompt))
+  DestinationPrompt = input("what is full directory that you would like to move '%s' to: " %SourcePrompt)
+  shutil.move(MoveItem,DestinationPrompt)
+
+
 def MoveDirectory():
   print("move directory")
-
 
 def Jarvis():
   while True:
