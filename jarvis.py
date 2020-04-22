@@ -1,11 +1,13 @@
 import click 
 import os
 import shutil
+#global variables
+CurrentDirectory = os.getcwd()
 
 def CreateController(prompt):
   objectItem = ''
   actionItem = ''
-  action= ['create','new','destroy','remove','delete','recycle','move','update','append']
+  action= ['create','new','destroy','remove','delete','recycle','move','rename','append']
   object = ['file','document','directory','folder']
   for i in prompt:
     if i in action:
@@ -33,6 +35,8 @@ def PerformAction(controller):
         MoveFile()
       else:
         MoveDirectory()
+    elif int(controller[0]) == 7:
+      ReName()
     else:
       print("bad request")
     
@@ -52,15 +56,11 @@ def DeleteFile():
   prompt = input("select a file to be delted and type it in: ")
   os.remove(prompt)
 
-def UpdateFile():
-  print("append file")
-
 #CreateDirectory()
 #This allows you to create a new directory in your current directory.  
 def CreateDirectory():
   print("create directory")
   prompt = input("what is the name of your new directory: ")
-  CurrentDirectory = os.getcwd()
   os.makedirs(os.path.join(CurrentDirectory,prompt))
 
 #DeleteDirectory()
@@ -68,7 +68,6 @@ def CreateDirectory():
 #It will prompt with a list of directories for you to choose from.  Then it will ask if you truly want to delete that directory.
 def DeleteDirectory():
   print("Delete Directory")
-  CurrentDirectory = os.getcwd()
   print(os.listdir(CurrentDirectory))
   DirectoryPrompt = input("what folder would you like to delete: ")
   DeletionItem = os.path.join(CurrentDirectory,str(DirectoryPrompt))
@@ -98,9 +97,21 @@ def DeleteDirectory():
     else:
       print("my appologies, I did not understand your response")
 
+#ReName()
+#Allows you to rename any given file
+def ReName():
+  print("file rename")
+  sep = "."
+  print(os.listdir(CurrentDirectory))
+  OriginalPrompt = input("please choose the file that you wish to rename: ")
+  FileExtension = OriginalPrompt.split(sep)[1]
+  NewNamePrompt = input("what is the new name for your file: ")
+  os.rename(OriginalPrompt,NewNamePrompt+"."+FileExtension)
+
+#MoveFile()
+#Allows you to easily move your file from one directory to another
 def MoveFile():
   print("move file")
-  CurrentDirectory = os.getcwd()
   print(os.listdir(CurrentDirectory))
   SourcePrompt = input("what file would you like to move: ")
   MoveItem = os.path.join(CurrentDirectory,str(SourcePrompt))
