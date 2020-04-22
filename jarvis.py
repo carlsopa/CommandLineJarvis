@@ -17,7 +17,7 @@ def CreateController(prompt):
   return [actionItem,objectItem]
 
 def PerformAction(controller):
-  if controller[0] =='' and controller[1] == '':
+  if controller[0] =='' or controller[1] == '':
     print("choose something else")
   else:
     if int(controller[0]) in range(0,2):
@@ -36,7 +36,10 @@ def PerformAction(controller):
       else:
         MoveDirectory()
     elif int(controller[0]) == 7:
-      ReName()
+      if int(controller[1]) in range(0,2):
+        ReNameFile()
+      else:
+        ReNameDirectory()
     else:
       print("bad request")
     
@@ -45,7 +48,8 @@ def PerformAction(controller):
 def CreateFile():
   print("create a new file")
   prompt = input("what is the name of your file(include extension): ")
-  file = open(prompt,'w+')
+  file = open(prompt,"w+")
+  file.close()
   
   #DeleteFile()
   #This will remove a specific file from your current directory.
@@ -99,14 +103,43 @@ def DeleteDirectory():
 
 #ReName()
 #Allows you to rename any given file
-def ReName():
+def ReNameFile():
   print("file rename")
   sep = "."
   print(os.listdir(CurrentDirectory))
+  NewNamePrompt = ''
   OriginalPrompt = input("please choose the file that you wish to rename: ")
-  FileExtension = OriginalPrompt.split(sep)[1]
-  NewNamePrompt = input("what is the new name for your file: ")
-  os.rename(OriginalPrompt,NewNamePrompt+"."+FileExtension)
+  if OriginalPrompt in os.listdir(CurrentDirectory):
+    FileExtension = OriginalPrompt.split(sep)[1]
+    NewNamePrompt = input("what is the new name for your file(DO NOT include .extension): ")
+    try:
+      os.rename(OriginalPrompt,NewNamePrompt+"."+FileExtension)
+    except OSError as error:
+      print(error)
+      print("'%s' file can not be created" %NewNamePrompt)
+  else:
+    print(NewNamePrompt)
+    NotFoundPrompt = input("it appears that your file was not found, would you like to create it instead(yes/no): ")
+    if NotFoundPrompt.capitalize().find("Y") == 0:
+      open(NewNamePrompt, "w+")
+    elif NotFoundPrompt.capitalize().find("N") == 0:
+      print("ok, maybe next time")
+    else:
+      print("hmmm, I didn't understand your response, please try again")
+
+def ReNameDirectory():
+  print("directory rename")
+  print(os.listdir(CurrentDirectory))
+  OriginalPrompt = input("please choose a folder to rename: ")
+  #if os.listdir(OriginalPrompt) == []:
+  NewNamePrompt = input("please enter a new name for your folder: ")
+  try:
+    os.rename(OriginalPrompt,NewNamePrompt)
+  except OSError as error:
+    print(error)
+    print("we had an issue updating {} to {}." .format(OriginalPrompt, NewNamePrompt))
+  #else:
+
 
 #MoveFile()
 #Allows you to easily move your file from one directory to another
@@ -129,6 +162,7 @@ def Jarvis():
     if prompt == 'exit()':
       exit()
     promptlist = list(prompt.split(" "))
+    #CreateController(promptlist)
     PerformAction(CreateController(promptlist))
 
 
