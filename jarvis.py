@@ -28,10 +28,8 @@ def CreateController(prompt):
   ClassType = OrderedDict({
     "CreateFile":CreateFile
   })
-#  action= ['create','new','destroy','remove','delete','recycle','move','rename','change','append']
-#  object = ['file','document','directory','folder']
+
   for i in prompt:
-    #print(i)
     if i in ActionType:
       ActionItem = ActionType.get(i).capitalize()
     if i in ObjectType:
@@ -39,34 +37,6 @@ def CreateController(prompt):
   ControlAction = ActionItem + ObjectItem
   func_to_run = globals()[ControlAction]
   func_to_run()
-
-
-# def PerformAction(controller):
-#   if controller[0] =='' or controller[1] == '':
-#     print("choose something else")
-#   else:
-#     if int(controller[0]) in range(0,2):
-#       if int(controller[1]) in range(0,2):
-#         CreateFile()
-#       else:
-#         CreateDirectory()
-#     elif int(controller[0]) in range(2,6):
-#       if int(controller[1]) in range(0,2):
-#         DeleteFile()
-#       else:
-#         DeleteDirectory()
-#     elif int(controller[0]) == 6:
-#       if int(controller[1]) in range(0,2):
-#         MoveFile()
-#       else:
-#         MoveDirectory()
-#     elif int(controller[0]) in range(7,9):
-#       if int(controller[1]) in range(0,2):
-#         ReNameFile()
-#       else:
-#         ReNameDirectory()
-#     else:
-#       print("bad request")
     
 #CreateFile()
 #This will allow you to create a new file in the current directory
