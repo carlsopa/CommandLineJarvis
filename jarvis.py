@@ -5,7 +5,7 @@ from collections import OrderedDict
 #global variables
 CurrentDirectory = os.getcwd()
 
-def CreateController(self,prompt):
+def CreateController(prompt):
   objectItem = ''
   actionItem = ''
   ActionType = OrderedDict({
@@ -25,6 +25,9 @@ def CreateController(self,prompt):
     "directory":"directory",
     "folder":"directory"
   })
+  ClassType = OrderedDict({
+    "CreateFile":CreateFile
+  })
 #  action= ['create','new','destroy','remove','delete','recycle','move','rename','change','append']
 #  object = ['file','document','directory','folder']
   for i in prompt:
@@ -33,43 +36,37 @@ def CreateController(self,prompt):
       ActionItem = ActionType.get(i).capitalize()
     if i in ObjectType:
       ObjectItem = ObjectType.get(i).capitalize()
-  print(ActionItem + ObjectItem)
-  getattr(self,ActionItem + ObjectItem)()
-#      ActionItem = str(action.index(i))
-#    if i in Object.keys(ObjectType):
-#      objectItem = str(object.index(i))
-#  return [actionItem,objectItem]
+  ControlAction = ActionItem + ObjectItem
+  func_to_run = globals()[ControlAction]
+  func_to_run()
 
-#selectedAction = action[actionItem]
-#selectedObject = object[objectItem]
-#print(selectedAction + selectedObject)
 
-def PerformAction(controller):
-  if controller[0] =='' or controller[1] == '':
-    print("choose something else")
-  else:
-    if int(controller[0]) in range(0,2):
-      if int(controller[1]) in range(0,2):
-        CreateFile()
-      else:
-        CreateDirectory()
-    elif int(controller[0]) in range(2,6):
-      if int(controller[1]) in range(0,2):
-        DeleteFile()
-      else:
-        DeleteDirectory()
-    elif int(controller[0]) == 6:
-      if int(controller[1]) in range(0,2):
-        MoveFile()
-      else:
-        MoveDirectory()
-    elif int(controller[0]) in range(7,9):
-      if int(controller[1]) in range(0,2):
-        ReNameFile()
-      else:
-        ReNameDirectory()
-    else:
-      print("bad request")
+# def PerformAction(controller):
+#   if controller[0] =='' or controller[1] == '':
+#     print("choose something else")
+#   else:
+#     if int(controller[0]) in range(0,2):
+#       if int(controller[1]) in range(0,2):
+#         CreateFile()
+#       else:
+#         CreateDirectory()
+#     elif int(controller[0]) in range(2,6):
+#       if int(controller[1]) in range(0,2):
+#         DeleteFile()
+#       else:
+#         DeleteDirectory()
+#     elif int(controller[0]) == 6:
+#       if int(controller[1]) in range(0,2):
+#         MoveFile()
+#       else:
+#         MoveDirectory()
+#     elif int(controller[0]) in range(7,9):
+#       if int(controller[1]) in range(0,2):
+#         ReNameFile()
+#       else:
+#         ReNameDirectory()
+#     else:
+#       print("bad request")
     
 #CreateFile()
 #This will allow you to create a new file in the current directory
