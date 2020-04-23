@@ -75,10 +75,10 @@ def DeleteDirectory():
     if prompt.capitalize().find("Y") == 0:
       try:
         os.rmdir(DeletionItem)
-        print("Directory '%s' has been removed successfully" %DeletionItem)
+        print("Directory {} has been removed successfully" .format(DeletionItem))
       except OSError as error:
         print(error)
-        print("Directory '%s' can not be removed" %DeletionItem)
+        print("Directory {} can not be removed" .format(DeletionItem))
     elif prompt.capitalize().find("N") == 0:
       print("don't delete me")
     else:
@@ -90,7 +90,7 @@ def DeleteDirectory():
         shutil.rmtree(DeletionItem)
       except OSError as error:
         print(error)
-        print("Directory '%s' cannot be removed" %DeletionItem)
+        print("Directory {} cannot be removed" .format(DeletionItem))
     elif prompt.capitalize().find("N") == 0:
       print("don't delete me")
     else:
@@ -98,7 +98,7 @@ def DeleteDirectory():
 
 #ReName()
 #Allows you to rename any given file
-def ReNameFile():
+def RenameFile():
   print("file rename")
   sep = "."
   print(os.listdir(CurrentDirectory))
@@ -110,7 +110,7 @@ def ReNameFile():
       os.rename(OriginalPrompt,NewNamePrompt+"."+FileExtension)
     except OSError as error:
       print(error)
-      print("'%s' file can not be created" %NewNamePrompt)
+      print("{} file can not be created" .format(NewNamePrompt))
   else:
     NotFoundPrompt = input("it appears that your file was not found, would you like to create it instead(yes/no): ")
     if NotFoundPrompt.capitalize().find("Y") == 0:
@@ -120,7 +120,7 @@ def ReNameFile():
     else:
       print("hmmm, I didn't understand your response, please try again")
 
-def ReNameDirectory():
+def RenameDirectory():
   print("directory rename")
   print(os.listdir(CurrentDirectory))
   OriginalPrompt = input("please choose a folder to rename: ")
@@ -138,7 +138,7 @@ def MoveFile():
   print(os.listdir(CurrentDirectory))
   SourcePrompt = input("what file would you like to move: ")
   MoveItem = os.path.join(CurrentDirectory,str(SourcePrompt))
-  DestinationPrompt = input("what is full directory that you would like to move '%s' to: " %SourcePrompt)
+  DestinationPrompt = input("what is full directory that you would like to move {} to: " .format(SourcePrompt))
   shutil.move(MoveItem,DestinationPrompt)
 
 
